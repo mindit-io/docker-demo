@@ -1,6 +1,6 @@
 package io.mindit.dockerdemo;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,19 +15,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
-@Category(Integration.class)
-@TestMethodOrder(OrderAnnotation.class)
-public class DockerDemoTests {
+public class DockerDemoIT {
 
-    @Before
+    @BeforeEach
     public void startApplication() {
         log.info("Wait until docker-demo is up");
         Wait.untilApplicationIsUp();
@@ -35,7 +29,6 @@ public class DockerDemoTests {
     }
 
     @Test
-    @Order(1)
     public void testInsertUser() throws IOException {
         log.info("Try to insert user...");
         String name = "Dumi";
