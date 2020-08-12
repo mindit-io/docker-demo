@@ -9,7 +9,7 @@ services:
       - MYSQL_ROOT_PASSWORD=ThePassword
       - MYSQL_DATABASE=dockerdemo
     networks:
-      - mysql
+      - mysql-net
     healthcheck:
       test: "/usr/bin/mysql --user=root --password=ThePassword --execute \"SHOW DATABASES;\""
       interval: 2s
@@ -22,10 +22,10 @@ services:
     ports:
       - 8080:8080
     networks:
-      - mysql
+      - mysql-net
     depends_on:
       mysql:
         condition: service_healthy
 
 networks:
-  mysql:
+  mysql-net:
