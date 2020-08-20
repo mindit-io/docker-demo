@@ -1,6 +1,18 @@
 version: '2.1'
 
 services:
+  oracle:
+    image: dumip/docker-oracle-xe-11g:latest
+    ports:
+      - 1521:1521
+    environment:
+      - ORACLE_ALLOW_REMOTE=true
+      - RELAX_SECURITY=1
+      - ORACLE_PASSWORD=testpassword
+    networks:
+      - oracle-net
+
+
   mysql:
     image: mysql:latest
     ports:
@@ -19,13 +31,19 @@ services:
   docker-demo:
     environment:
       - MYSQL_HOST=mysql
+      - ORACLE_HOST=oracle
+      - JAVA_OPTS="-Doracle.jdbc.timezoneAsRegion=false -Duser.timezone=GMT"
     ports:
       - 8080:8080
     networks:
       - mysql-net
+      - oracle-net
     depends_on:
       mysql:
+        condition: service_healthy
+      oracle:
         condition: service_healthy
 
 networks:
   mysql-net:
+  oracle-net:
