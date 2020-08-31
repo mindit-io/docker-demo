@@ -9,6 +9,7 @@ services:
       - ORACLE_ALLOW_REMOTE=true
       - RELAX_SECURITY=1
       - ORACLE_PASSWORD=testpassword
+      - SCHEMA=dockerdemo
     networks:
       - oracle-net
 
@@ -32,7 +33,7 @@ services:
     environment:
       - MYSQL_HOST=mysql
       - ORACLE_HOST=oracle
-      - JAVA_OPTS="-Doracle.jdbc.timezoneAsRegion=false -Duser.timezone=GMT"
+      - JAVA_OPTS=-Duser.timezone=GMT+2
     ports:
       - 8080:8080
     networks:
