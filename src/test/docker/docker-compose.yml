@@ -29,20 +29,34 @@ services:
       timeout: 20s
       retries: 10
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
+    ports:
+      - 9300:9300
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+    networks:
+      - es-net
+
   docker-demo:
     environment:
       - MYSQL_HOST=mysql
       - ORACLE_HOST=oracle
       - JAVA_OPTS=-Duser.timezone=GMT+2
+      - ELASTICSEARCH_HOST=elasticsearch
     ports:
       - 8080:8080
     networks:
       - mysql-net
       - oracle-net
+      - es-net
     depends_on:
       - mysql
       - oracle
+      - elasticsearch
 
 networks:
   mysql-net:
   oracle-net:
+  es-net:
