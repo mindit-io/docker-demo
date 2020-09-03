@@ -35,7 +35,7 @@ public class DockerDemoIT {
         String email = "my.email@something.com";
 
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPost post = new HttpPost("http://localhost:8080/demo/add");
+            HttpPost post = new HttpPost("http://localhost:8080/users");
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("name", name));
@@ -48,11 +48,12 @@ public class DockerDemoIT {
         }
 
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpGet get = new HttpGet("http://localhost:8080/demo/count");
+            HttpGet get = new HttpGet("http://localhost:8080/users/count");
 
             CloseableHttpResponse response = client.execute(get);
             String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
             assertEquals("1", responseString);
         }
     }
+
 }
