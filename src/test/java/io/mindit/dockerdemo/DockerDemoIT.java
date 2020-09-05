@@ -37,7 +37,7 @@ public class DockerDemoIT {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost post = new HttpPost("http://localhost:8080/users");
 
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("name", name));
             params.add(new BasicNameValuePair("email", email));
             post.setEntity(new UrlEncodedFormEntity(params));
@@ -47,6 +47,7 @@ public class DockerDemoIT {
             log.info("User inserted successfully...");
         }
 
+        // check the user from DB
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet get = new HttpGet("http://localhost:8080/users/count");
 
@@ -54,6 +55,14 @@ public class DockerDemoIT {
             String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
             assertEquals("1", responseString);
         }
-    }
 
+        // check the user from Elasticsearch
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpGet get = new HttpGet("http://localhost:8080/users/search-count");
+
+            CloseableHttpResponse response = client.execute(get);
+            String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
+            assertEquals("1", responseString);
+        }
+    }
 }

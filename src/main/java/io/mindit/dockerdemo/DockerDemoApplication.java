@@ -17,10 +17,12 @@ import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.support.DatabaseStartupValidator;
 
 @SpringBootApplication
-@EnableElasticsearchRepositories(basePackages = "io.mindit.dockerdemo")
+@EnableElasticsearchRepositories(basePackages = "io.mindit.dockerdemo.es")
+@EnableJpaRepositories(basePackages = "io.mindit.dockerdemo.jpa")
 @EnableConfigurationProperties(ElasticsearchConfig.class)
 @Slf4j
 public class DockerDemoApplication {
